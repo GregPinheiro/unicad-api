@@ -2,8 +2,8 @@ const services = require('../services/entregas.services');
 const { autoSchema } = require('../middlewares/validation_schema');
 
 const entrega = {
-    findAll: services.listarRegistros,
-    findOne: services.rotaEntrega,
+    findAll: services.findAll,
+    findOne: services.findOne,
     create: (async (req, res, next) => {
         try {
             await autoSchema.validateAsync(req.body);
@@ -11,7 +11,7 @@ const entrega = {
         } catch (error) {
             res.status(500).send(error);
         }
-    } , services.criarRegistro)
+    } , services.create)
 }
 
 module.exports = entrega;
