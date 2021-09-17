@@ -31,14 +31,15 @@ const findAll = async (req, res) => {
         let count = Object.keys(datas).length;
 
         if (datas) {
-            let length = limit + offset;
-            let result = datas.slice(parseInt(offset),length);
+            //let length = limit + offset;
+            //let result = datas.slice(parseInt(offset),length);
+            let results = datas;
 
             let data = {
                 count,
                 limit,
                 offset,
-                result
+                results
             }
             res.status(200).send(data);
         } else { 
