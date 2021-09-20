@@ -1,4 +1,4 @@
-const { object } = require('joi');
+const { object, date } = require('joi');
 const { Entregas } = require('../models');
 
 const create = async (req, res) => {
@@ -19,29 +19,22 @@ const create = async (req, res) => {
 }
 
 const findAll = async (req, res) => {
-    try {
-        let offset = 0;
-        let limit = 5;        
+    try {      
 
-        let params = req.query;
-        if (params.offset) { offset = parseInt(params.offset); }
-        if (params.limit) { limit = parseInt(params.limit); }        
+        const result = await Entregas.findAll();        
 
-        let datas = await Entregas.findAll();
-        let count = Object.keys(datas).length;
+        if (result) {
+            
+            var datas = result.map(response => {
+                let dataEntrega = new Date(response.dataEntrega).toDateString();
+                return {
+                    id: response.id,
+                    nomeCliente: response.nomeCliente,
+                    dataEntrega
+                }
+            });
 
-        if (datas) {
-            //let length = limit + offset;
-            //let result = datas.slice(parseInt(offset),length);
-            let results = datas;
-
-            let data = {
-                count,
-                limit,
-                offset,
-                results
-            }
-            res.status(200).send(data);
+            res.status(200).send(datas);
         } else { 
             res.status(404).send("Nenhum registro encontrado");
         }
@@ -60,7 +53,7 @@ const findOne = async (req, res) => {
             var datas = {
                 id: result.id,
                 nomeCliente: result.nomeCliente,
-                dataEntrega: result.dataEntrega,
+                dataEntrega: new Date(result.dataEntrega).toDateString(),
                 pontoPartida: result.pontoPartida,
                 pontoDestino: result.pontoDestino
             }
