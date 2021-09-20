@@ -60,6 +60,7 @@ const findOne = async (req, res) => {
             var datas = {
                 id: result.id,
                 nomeCliente: result.nomeCliente,
+                dataEntrega: result.dataEntrega,
                 pontoPartida: result.pontoPartida,
                 pontoDestino: result.pontoDestino
             }

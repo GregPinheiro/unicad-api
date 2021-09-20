@@ -8,7 +8,6 @@ const middleware = (schema, property) => {
         } else {
             const { details } = error
             res.status(400).send(details[0].message)
-            console.log(details[0].message)
         }
     }
 }
